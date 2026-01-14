@@ -1,0 +1,45 @@
+{
+  "name": "jasion-agent-skills",
+  "owner": {
+    "name": "jasion",
+    "email": "jasion@test.com"
+  },
+  "metadata": {
+    "description": "jasion example skills",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "test1-skills",
+      "description": "测试技能包1",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/xlsx",
+        "./skills/docx",
+        "./skills/pptx",
+        "./skills/pdf"
+      ]
+    },
+    {
+      "name": "example1-skills",
+      "description": "案例技能包1",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/algorithmic-art",
+        "./skills/brand-guidelines",
+        "./skills/canvas-design",
+        "./skills/doc-coauthoring",
+        "./skills/frontend-design",
+        "./skills/internal-comms",
+        "./skills/mcp-builder",
+        "./skills/skill-creator",
+        "./skills/slack-gif-creator",
+        "./skills/theme-factory",
+        "./skills/web-artifacts-builder",
+        "./skills/webapp-testing"
+      ]
+    }
+  ]
+}
