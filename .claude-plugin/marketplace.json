@@ -2,29 +2,52 @@
   "name": "jasion-agent-skills",
   "owner": {
     "name": "jasion",
-    "email": "jasion@test.com"
+    "email": "yuandeshoulian@hotmail.com"
   },
   "metadata": {
-    "description": "jasion example skills",
+    "description": "整理个人使用中使用的技能包",
     "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "test1-skills",
+      "name": "development",
       "description": "测试技能包1",
-      "source": "./",
+      "source": "./development",
       "strict": false,
       "skills": [
-        "./test1/xlsx",
       ]
     },
     {
-      "name": "example1-skills",
-      "description": "案例技能包1",
-      "source": "./",
+      "name": "automation",
+      "description": "自动化任务",
+      "source": "./automation",
       "strict": false,
       "skills": [
-        "./example1/doc",
+        "wechat-article"
+      ]
+    },
+    {
+      "name": "document",
+      "description": "文档处理",
+      "source": "./document",
+      "strict": false,
+      "skills": [
+      ]
+    },
+    {
+      "name": "data-processing",
+      "description": "数据处理",
+      "source": "./data-processing",
+      "strict": false,
+      "skills": [
+      ]
+    },
+    {
+      "name": "design",
+      "description": "设计相关",
+      "source": "./design",
+      "strict": false,
+      "skills": [
       ]
     }
   ]
