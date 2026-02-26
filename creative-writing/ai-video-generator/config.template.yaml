@@ -1,0 +1,278 @@
+# AI 视频生成器配置模板
+# 复制此文件为 config.yaml 并修改相应的 API Key
+
+# ===== 模型配置 =====
+
+# 图生视频模型（核心配置）
+image_to_video:
+  provider: "volcano"  # 服务商：volcano | aliyun | runway
+  model: "seaweed-2.0"  # 当前使用的模型
+
+  # ⚠️ 重要：根据实际使用的模型调整这些参数
+  capabilities:
+    max_duration: 12  # ✨ 可配置：视频最大时长（秒）
+    has_audio: true   # 是否支持音频生成
+    has_voice: true   # 是否支持配音生成
+    vertical_support: true  # 是否支持竖屏
+
+  # 可选模型列表（未来可以轻松切换）
+  alternative_models:
+    # ✨ Seaweed 2.0（当前推荐）
+    - name: "seaweed-2.0"
+      provider: "volcano"
+      max_duration: 12  # 12 秒限制
+      has_audio: true
+      has_voice: true
+      cost_per_second: 2.0
+      quality: 5
+
+    # Seaweed 1.0（低成本选项）
+    - name: "seaweed-1.0"
+      provider: "volcano"
+      max_duration: 8
+      has_audio: false
+      has_voice: false
+      cost_per_second: 1.0
+      quality: 4
+
+    # ✨ 未来模型（示例）
+    # 取消注释并调整参数以使用新模型
+    # - name: "seaweed-3.0"
+    #   provider: "volcano"
+    #   max_duration: 30  # 假设未来支持 30 秒
+    #   has_audio: true
+    #   has_voice: true
+    #   cost_per_second: 2.5
+    #   quality: 5
+
+    # Runway Gen-3（高质量选项）
+    - name: "runway-gen3"
+      provider: "runway"
+      max_duration: 16
+      has_audio: false
+      has_voice: false
+      cost_per_second: 3.0
+      quality: 5
+
+    # 阿里云视频生成
+    - name: "aliyun-video-gen"
+      provider: "aliyun"
+      max_duration: 10
+      has_audio: true
+      has_voice: false
+      cost_per_second: 1.5
+      quality: 4
+
+# 文生图模型
+text_to_image:
+  provider: "volcano"  # volcano | aliyun
+  model: "doubaao-ai"
+  default_params:
+    width: 768
+    height: 1365  # 9:16 竖屏
+    num_inference_steps: 50
+    guidance_scale: 7.5
+
+# 图生图模型（角色一致性）
+image_to_image:
+  provider: "volcano"
+  model: "controlnet-openpose"
+
+  # IP-Adapter 配置（保持角色一致性）
+  ip_adapter:
+    enabled: true
+    model: "ip-adapter-plus"
+    default_weight: 0.75  # ✨ 可调整：0-1，越高越接近参考图
+
+# ===== API 密钥配置 =====
+# 方式1：直接在此处填写（不推荐，容易泄露）
+# 方式2：使用环境变量（推荐）
+
+api_keys:
+  # 火山引擎
+  volcano:
+    api_key: "${VOLCANO_API_KEY}"  # 从环境变量读取
+    endpoint: "https://ark.cn-beijing.volces.com/api/v3"
+
+  # 阿里云
+  aliyun:
+    api_key: "${ALIYUN_API_KEY}"
+    endpoint: "https://dashscope.aliyuncs.com/api/v1"
+
+  # Runway（可选）
+  runway:
+    api_key: "${RUNWAY_API_KEY}"
+    endpoint: "https://api.runwayml.com/v1"
+
+# ===== 生成策略配置 =====
+
+generation:
+  # 视频分段策略
+  segmentation:
+    strategy: "by_shot"  # by_shot | by_scene | fixed_duration
+    # ✨ 可配置：根据模型的 max_duration 自动分段
+    max_segment_duration: 12  # 与模型的 max_duration 保持一致
+
+  # 并发控制（加快生成速度）
+  concurrency:
+    max_parallel_images: 5  # ✨ 可调整：同时生成的图片数
+    max_parallel_videos: 2  # ✨ 可调整：同时生成的视频数
+
+  # 重试策略
+  retry:
+    max_attempts: 3
+    retry_delay: 5  # 秒
+
+# ===== 成本控制配置 =====
+
+cost:
+  # 预算限制
+  budget:
+    max_per_episode: 300  # ✨ 可调整：单集最大预算（元）
+    alert_threshold: 0.8  # 达到 80% 时警告
+
+  # 成本优化
+  optimization:
+    enable_caching: true  # ✨ 推荐开启：复用角色和场景图片
+    use_low_cost_model: false  # 是否使用低成本模型
+
+  # 成本估算（根据实际 API 价格调整）
+  pricing:
+    text_to_image: 0.3  # 元/张
+    image_to_image: 0.5  # 元/张
+    image_to_video: 2.0  # ✨ 元/秒（根据模型调整）
+    tts: 0.3  # 元/分钟
+
+# ===== 输出配置 =====
+
+output:
+  # 输出目录
+  base_dir: "./output/ai-video"
+
+  # 视频格式
+  video:
+    codec: "h264"
+    bitrate: "8M"
+    audio_codec: "aac"
+    audio_bitrate: "192k"
+
+# ===== 提示词配置 =====
+
+prompts:
+  # 全局质量标签
+  quality_tags: "masterpiece, best quality, ultra-detailed, 8k, photorealistic"
+
+  # 全局负面提示词
+  negative_prompt: "(worst quality, low quality:1.4), lowres, bad anatomy, blurry, deformed"
+
+  # 竖屏标签
+  vertical_tags: "vertical composition, 9:16 aspect ratio, portrait orientation"
+
+# ===== 调试配置 =====
+
+debug:
+  enabled: false  # ✨ 开发时设为 true
+  save_intermediate: false  # 是否保存中间结果
+  log_level: "INFO"  # DEBUG | INFO | WARNING | ERROR
+
+---
+
+# 🔧 配置说明
+
+## 如何使用新模型？
+
+当有更好的模型发布时（如 Seaweed 3.0），只需：
+
+1. 在 `alternative_models` 列表中添加新模型信息：
+```yaml
+- name: "seaweed-3.0"
+  provider: "volcano"
+  max_duration: 30  # ✨ 新模型支持 30 秒！
+  has_audio: true
+  has_voice: true
+  cost_per_second: 2.5
+  quality: 5
+```
+
+2. 更新当前使用的模型：
+```yaml
+image_to_video:
+  model: "seaweed-3.0"  # ✨ 切换到新模型
+  capabilities:
+    max_duration: 30  # ✨ 更新时长限制
+```
+
+3. 更新分段策略：
+```yaml
+generation:
+  segmentation:
+    max_segment_duration: 30  # ✨ 更新分段时长
+```
+
+就这么简单！无需修改代码。
+
+## 如何设置 API 密钥？
+
+### 方式1：环境变量（推荐）✅
+
+创建 `.env` 文件：
+```bash
+# .env（不要提交到 Git！）
+VOLCANO_API_KEY=your_key_here
+ALIYUN_API_KEY=your_key_here
+RUNWAY_API_KEY=your_key_here
+```
+
+### 方式2：直接填写（不推荐）❌
+
+直接替换配置中的占位符：
+```yaml
+api_keys:
+  volcano:
+    api_key: "your_actual_key_here"  # 容易泄露，不推荐！
+```
+
+## 性能优化建议
+
+### 提升生成速度：
+```yaml
+concurrency:
+  max_parallel_images: 10  # 增加并发数（需要更好的网络）
+  max_parallel_videos: 3
+```
+
+### 降低成本：
+```yaml
+cost:
+  optimization:
+    enable_caching: true  # ✅ 必开
+    use_low_cost_model: true  # 使用低成本模型（质量略低）
+```
+
+---
+
+# 📊 模型对比
+
+| 模型 | 时长 | 音频 | 配音 | 成本 | 质量 | 推荐场景 |
+|------|------|------|------|------|------|---------|
+| Seaweed 2.0 | 12秒 | ✅ | ✅ | 中 | ⭐⭐⭐⭐⭐ | 当前最佳选择 |
+| Seaweed 1.0 | 8秒 | ❌ | ❌ | 低 | ⭐⭐⭐⭐ | 预算有限 |
+| Runway Gen-3 | 16秒 | ❌ | ❌ | 高 | ⭐⭐⭐⭐⭐ | 追求质量 |
+| 阿里云 | 10秒 | ✅ | ❌ | 中 | ⭐⭐⭐⭐ | 备用方案 |
+
+---
+
+# 🚀 快速开始
+
+1. 复制此文件为 `config.yaml`
+2. 设置 API 密钥（环境变量或直接填写）
+3. 根据需要调整参数
+4. 开始生成！
+
+```bash
+# 设置环境变量
+export VOLCANO_API_KEY=your_key
+
+# 运行生成器
+python generate_video.py --config config.yaml
+```

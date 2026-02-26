@@ -49,6 +49,17 @@
       "strict": false,
       "skills": [
       ]
+    },
+    {
+      "name": "creative-writing",
+      "description": "创意写作",
+      "source": "./creative-writing",
+      "strict": false,
+      "skills": [
+        "short-drama",
+        "storyboard-director",
+        "ai-video-generator"
+      ]
     }
   ]
 }

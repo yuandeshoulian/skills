@@ -1,0 +1,20 @@
+# AI 视频生成器依赖
+# 安装: pip install -r requirements.txt
+
+# 核心依赖
+pyyaml>=6.0
+requests>=2.28.0
+Pillow>=9.0.0
+python-dotenv>=0.19.0
+
+# 视频处理
+# 注意：需要单独安装 FFmpeg（系统级）
+# Windows: https://ffmpeg.org/download.html
+# Mac: brew install ffmpeg
+# Linux: sudo apt install ffmpeg
+
+# 可选：进度条
+tqdm>=4.64.0
+
+# 可选：日志
+loguru>=0.6.0
