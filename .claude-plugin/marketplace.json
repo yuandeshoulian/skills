@@ -23,7 +23,8 @@
       "source": "./automation",
       "strict": false,
       "skills": [
-        "wechat-article"
+        "wechat-article",
+        "stock-analyzer"
       ]
     },
     {
