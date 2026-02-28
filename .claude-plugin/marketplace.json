@@ -24,7 +24,8 @@
       "strict": false,
       "skills": [
         "wechat-article",
-        "stock-analyzer"
+        "stock-analyzer",
+        "stock-recommender"
       ]
     },
     {
