@@ -11,21 +11,32 @@
   "plugins": [
     {
       "name": "development",
-      "description": "测试技能包1",
+      "description": "开发相关",
       "source": "./development",
       "strict": false,
       "skills": [
       ]
     },
     {
-      "name": "automation",
-      "description": "自动化任务",
-      "source": "./automation",
+      "name": "stock",
+      "description": "股票相关",
+      "source": "./stock",
+      "strict": false,
+      "skills": [
+        "stock-analyzer",
+        "stock-recommender"
+      ]
+    },
+    {
+      "name": "media",
+      "description": "自媒体与内容创作",
+      "source": "./media",
       "strict": false,
       "skills": [
         "wechat-article",
-        "stock-analyzer",
-        "stock-recommender"
+        "short-drama",
+        "storyboard-director",
+        "ai-video-generator"
       ]
     },
     {
@@ -37,30 +48,11 @@
       ]
     },
     {
-      "name": "data-processing",
-      "description": "数据处理",
-      "source": "./data-processing",
-      "strict": false,
-      "skills": [
-      ]
-    },
-    {
       "name": "design",
       "description": "设计相关",
       "source": "./design",
       "strict": false,
       "skills": [
-      ]
-    },
-    {
-      "name": "creative-writing",
-      "description": "创意写作",
-      "source": "./creative-writing",
-      "strict": false,
-      "skills": [
-        "short-drama",
-        "storyboard-director",
-        "ai-video-generator"
       ]
     }
   ]
